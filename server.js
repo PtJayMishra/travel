@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import errorMiddleware from "./middleware.js/errorMiddleware.js";
 import authRoutes from "./route/authRoutes.js";
+import userRoutes from "./route/userRoutes.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.get("/health", (req, res) => {
   res.json({ status: "Server running" });
 });
 app.use("/api/auth" , authRoutes)
+app.use("/api/users", userRoutes);
 app.use(errorMiddleware);
 // start server
 app.listen(process.env.PORT, () => {

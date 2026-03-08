@@ -25,7 +25,7 @@ const loginUser = async ({email, password}) =>{
     if(!isMatch){
         throw new ApiError(401 , "Invalid credentials");
     }
-    const token = jwt.sign({id : user_id} . process.env.JWT_SECRET,{expiresIn : "7d"})
+    const token = jwt.sign({id : user._id} , process.env.JWT_SECRET,{expiresIn : "7d"})
     return { user , token};
 }
 export default{
