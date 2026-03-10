@@ -1,5 +1,9 @@
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import{
+    generateAccessToken , generateRefreshToken
+} from "./tokenService.js"
+
  
 import repo from "./auth.repository.js";
 import ApiError from "../../utils/ApiError.js";
@@ -25,8 +29,13 @@ const loginUser = async ({email, password}) =>{
     if(!isMatch){
         throw new ApiError(401 , "Invalid credentials");
     }
-    const token = jwt.sign({id : user._id} , process.env.JWT_SECRET,{expiresIn : "7d"})
-    return { user , token};
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+     return {
+    user,
+    accessToken,
+    refreshToken
+  }
 }
 export default{
     registerUser,
